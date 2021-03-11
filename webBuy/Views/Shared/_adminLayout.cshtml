@@ -1,0 +1,142 @@
+﻿@using webBuy.Models
+
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
+    <title>@ViewBag.Title</title>
+</head>
+<body>
+    <nav class="navbar fixed-top navbar-expand-md bg-dark navbar-dark">
+        <!-- Brand -->
+        <a class="navbar-brand" href="/admin">webBuy</a>
+
+        <!-- Navbar links -->
+        <ul class="navbar-nav mr-auto">
+        </ul>
+        <ul class="navbar-nav">
+            <li>
+                <div class="text-white small"><i class="fas fa-user"></i> Welcome, @((Session["userProfile"] as User).name)</div>
+            </li>
+        </ul>
+
+        </div>
+    </nav>
+
+
+    @*toggle side menu*@
+    <button style="margin-top:80px; margin-left:10px;margin-right:10px;" class="bg-white text-primary border small" type="button" data-toggle="collapse" data-target="#sidemenu">
+        <span class="navbar-toggler-icon"><i class="fas fa-bars"></i></span>
+    </button>
+
+    <!-- Navbar links -->
+    <div style="background-color: aliceblue;" class="collapse navbar-collapse m-2 p-3 border w-50" id="sidemenu">
+        <ul class="navbar-nav mr-auto">
+        </ul>
+        <ul class="navbar-nav">
+            <li class="nav-item small">
+                <a class="nav-link p-1" href="/Logout/Index"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </li>
+            <li class="nav-item small">
+                <a class="nav-link p-1" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                    <i class="fas fa-wrench"></i> Settings
+                </a>
+                <div class="collapse" id="collapseExample">
+                    <div class="card card-body p-2">
+                        <a data-toggle="modal" data-target="#ChangePassword" class="nav-link p-1" href="/admin/ChangePassword"> <i class="fas fa-key"></i> Change Password</a>
+                        <a class="nav-link p-1" href="#"> <i class="fas fa-user-edit"></i> Profile</a>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    @if (TempData["msg"] != null)
+    {
+        <div class=" container alert-@TempData["msg-type"] small p-2" role="alert">
+            @TempData["msg"]
+        </div>
+    }
+
+    @RenderBody()
+
+
+
+
+
+
+    <!--------------------------------------------- Modals --------------------------------------------->
+    <!-- ChangePassword Modal -->
+    <div class="modal fade" id="ChangePassword" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Change Password</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" action="Admin/ChangePassword">
+                        <div class="form-group row">
+                            <label for="Password" class="col-form-label ml-3 mt-2">Old Password</label>
+                            <div class="col-sm-10">
+                                <input name="OldPassword" type="password" class="form-control form-control-sm" id="Password">
+                            </div>
+
+                            <label for="newPassword" class="col-form-label ml-3  mt-2">New Password</label>
+                            <div class="col-sm-10">
+                                <input name="NewPassword" type="password" class="form-control form-control-sm" id="newPassword">
+                            </div>
+
+                            <label for="confirmNewPassword" class="col-form-label ml-3  mt-2">Confirm New Password</label>
+                            <div class="col-sm-10">
+                                <input name="ConfirmNewPassword" type="password" class="form-control form-control-sm" id="confirmNewPassword">
+                            </div>
+                        </div>
+
+                        <br />
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- ChangePassword Modal -->
+        <!--------------------------------------------- Modals --------------------------------------------->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <footer class="fixed-bottom bg-dark text-white text-center">
+            <div class="container my-2">
+                <span class="text-muted">&copy; @DateTime.Now.Year - webBuy</span>
+            </div>
+        </footer>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
+</body>
+</html>

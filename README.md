@@ -1,2 +1,2 @@
-# Asp.net-webBuy-Project
-E-Commerce Website
+# webBuy
+webBuy eCommerce site team project
