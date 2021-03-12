@@ -123,7 +123,7 @@
     <Compile Include="Models\Category.cs">
       <DependentUpon>webBuy.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ChangePassword.cs" />
+    <Compile Include="Models\Validation\ChangePassword.cs" />
     <Compile Include="Models\Comission.cs">
       <DependentUpon>webBuy.tt</DependentUpon>
     </Compile>
@@ -154,6 +154,8 @@
     <Compile Include="Models\User.cs">
       <DependentUpon>webBuy.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Validation\User2.cs" />
+    <Compile Include="Models\Validation\UserMetaData.cs" />
     <Compile Include="Models\webBuy.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -191,6 +193,7 @@
     <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\Shared\_sellerLayout.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Admin\UpdateUserProfile.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

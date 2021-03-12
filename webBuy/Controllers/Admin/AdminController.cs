@@ -41,7 +41,7 @@ namespace webBuy.Controllers.Admin
                     if (changePassword.NewPassword!= changePassword.ConfirmNewPassword)
                     {
                         TempData["msg-type"] = "danger";
-                        TempData["msg"] = "Old password & confirm new password is not matching";
+                        TempData["msg"] = "New password & confirm new password is not matching";
                     }
                     else
                     {
@@ -56,5 +56,50 @@ namespace webBuy.Controllers.Admin
             
             return RedirectToAction("Index");
         }
+
+        public ActionResult UpdateUserProfile()
+        {
+            User profile = userRepository.Get((Session["userProfile"] as User).userId);
+            return View(profile);
+        }
+        [HttpPost]
+        public ActionResult UpdateUserProfile(User user)
+        {
+            if (ModelState.IsValid)
+            {
+                if ((Session["userProfile"] as User).email!=user.email)
+                {
+                    if (userRepository.VerifyEmailInDb(user.email))
+                    {
+                        TempData["msg-type"] = "success";
+                        TempData["msg"] = "Email changed to " + "'" + user.email + "'";
+                        userRepository.Update(user);
+                        Session["userProfile"] = user;
+                        return RedirectToAction("Index");
+                    }
+                    else
+                    {
+                        TempData["msg-type"] = "danger";
+                        TempData["msg"] = "'" + user.email + "' already exists";
+                        return RedirectToAction("UpdateUserProfile");
+                    }
+                }
+                else
+                {
+                    TempData["msg-type"] = "success";
+                    TempData["msg"] = "Profile updated";
+                    userRepository.Update(user);
+                    Session["userProfile"] = user;
+                    return RedirectToAction("Index");
+                }
+                
+
+            }
+            else
+            {
+                return View("UpdateUserProfile");
+            }
+        }
+
     }
 }
