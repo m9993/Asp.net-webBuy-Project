@@ -11,6 +11,7 @@ namespace webBuy.Controllers.Admin
     public class AdminController : Controller
     {
         UserRepository userRepository = new UserRepository();
+        OrderRepository orderRepository = new OrderRepository();
         // GET: Admin
         public ActionResult Index()
         {
@@ -101,5 +102,23 @@ namespace webBuy.Controllers.Admin
             }
         }
 
+        public ActionResult GetTodaySells()
+        {
+            List<double> sumTotalInWeek = new List<double>();
+            for (int i=0; i<7;i++)
+            {
+                var date = DateTime.Now.AddDays(-i).ToShortDateString();
+                var listByDate = orderRepository.GetOrdersListByDate(date).ToList();
+                double sumTotal = 0;
+                foreach (var item in listByDate)
+                {
+                    sumTotal += (double)item.total;
+                }
+                sumTotalInWeek.Add(sumTotal);
+            }
+
+            return Json(sumTotalInWeek.ToArray(), JsonRequestBehavior.AllowGet);
+        }
+       
     }
 }
