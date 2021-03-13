@@ -12,6 +12,10 @@ namespace webBuy.Controllers.Admin
     {
         UserRepository userRepository = new UserRepository();
         OrderRepository orderRepository = new OrderRepository();
+        ShopRepository shopRepository = new ShopRepository();
+        ComissionRepository comissionRepository = new ComissionRepository();
+        WithdrawRepository withdrawRepository = new WithdrawRepository();
+
         // GET: Admin
         public ActionResult Index()
         {
@@ -24,22 +28,22 @@ namespace webBuy.Controllers.Admin
         [HttpPost]
         public ActionResult ChangePassword(ChangePassword changePassword)
         {
-            if (changePassword.OldPassword==null || changePassword.NewPassword == null || changePassword.ConfirmNewPassword == null)
+            if (changePassword.OldPassword == null || changePassword.NewPassword == null || changePassword.ConfirmNewPassword == null)
             {
                 TempData["msg-type"] = "danger";
                 TempData["msg"] = "All fields need to be filled";
             }
             else
             {
-                User profile=userRepository.Get((Session["userProfile"] as User).userId);
-                if (profile.password!= changePassword.OldPassword)
+                User profile = userRepository.Get((Session["userProfile"] as User).userId);
+                if (profile.password != changePassword.OldPassword)
                 {
                     TempData["msg-type"] = "danger";
                     TempData["msg"] = "Old password does not match";
                 }
                 else
                 {
-                    if (changePassword.NewPassword!= changePassword.ConfirmNewPassword)
+                    if (changePassword.NewPassword != changePassword.ConfirmNewPassword)
                     {
                         TempData["msg-type"] = "danger";
                         TempData["msg"] = "New password & confirm new password is not matching";
@@ -54,7 +58,7 @@ namespace webBuy.Controllers.Admin
                     }
                 }
             }
-            
+
             return RedirectToAction("Index");
         }
 
@@ -68,7 +72,7 @@ namespace webBuy.Controllers.Admin
         {
             if (ModelState.IsValid)
             {
-                if ((Session["userProfile"] as User).email!=user.email)
+                if ((Session["userProfile"] as User).email != user.email)
                 {
                     if (userRepository.VerifyEmailInDb(user.email))
                     {
@@ -93,7 +97,7 @@ namespace webBuy.Controllers.Admin
                     Session["userProfile"] = user;
                     return RedirectToAction("Index");
                 }
-                
+
 
             }
             else
@@ -105,7 +109,7 @@ namespace webBuy.Controllers.Admin
         public ActionResult GetTodaySells()
         {
             List<double> sumTotalInWeek = new List<double>();
-            for (int i=0; i<7;i++)
+            for (int i = 0; i < 7; i++)
             {
                 var date = DateTime.Now.AddDays(-i).ToShortDateString();
                 var listByDate = orderRepository.GetOrdersListByDate(date).ToList();
@@ -119,6 +123,58 @@ namespace webBuy.Controllers.Admin
 
             return Json(sumTotalInWeek.ToArray(), JsonRequestBehavior.AllowGet);
         }
-       
+
+        public ActionResult AvailableBalanceInAllShops()
+        {
+            double balance = 0;
+            var allShopDetails = shopRepository.GetAll().ToList();
+            foreach (var item in allShopDetails)
+            {
+                balance += (double)item.balance;
+            }
+            //1.00
+            var balanceInFraction = string.Format("{0:f2}", balance);
+            return Json(balanceInFraction, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult GetTotalComission()
+        {
+            double balance = 0;
+            var comissionDetails = comissionRepository.GetAll().ToList();
+            foreach (var item in comissionDetails)
+            {
+                balance += (double)item.amount;
+            }
+            //1.00
+            var balanceInFraction = string.Format("{0:f2}", balance);
+            return Json(balanceInFraction, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult GetSellerWithdrawedMoney()
+        {
+            double balance = 0;
+            var sellerWithdrawDetails = withdrawRepository.SellerWithdraw().ToList();
+            foreach (var item in sellerWithdrawDetails)
+            {
+                balance += (double)item.amount;
+            }
+            //1.00
+            var balanceInFraction = string.Format("{0:f2}", balance);
+            return Json(balanceInFraction, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult GetAdminWithdrawedMoney()
+        {
+            double balance = 0;
+            var adminWithdrawDetails = withdrawRepository.AdminWithdraw().ToList();
+            foreach (var item in adminWithdrawDetails)
+            {
+                balance += (double)item.amount;
+            }
+            //1.00
+            var balanceInFraction = string.Format("{0:f2}", balance);
+            return Json(balanceInFraction, JsonRequestBehavior.AllowGet);
+        }
+
     }
 }

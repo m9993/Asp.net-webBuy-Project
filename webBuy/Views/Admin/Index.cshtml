@@ -3,16 +3,109 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_adminLayout.cshtml";
 }
+<h5 class="mb-3">Site Summary</h5>
+<div class="jumbotron d-flex flex-wrap justify-content-center" style="margin-bottom: 6rem;">
+    <div class="card text-white bg-dark  mb-3 mx-2" style="max-width: 15rem; max-height: 10rem;">
+        <div class="card-header">Shop Balance</div>
+        <div class="card-body">
+            <h6 class="card-title">Total shop balance to withdraw</h6>
+            <p class="card-text badge badge-pill badge-danger" id="AvailableBalanceInAllShops"></p>
+        </div>
+    </div>
+
+    <div class="card text-white bg-info  mb-3 mx-2" style="max-width: 15rem; max-height: 10rem">
+        <div class="card-header">Profit</div>
+        <div class="card-body">
+            <h6 class="card-title">Total comission from sales</h6>
+            <p class="card-text badge badge-pill badge-danger" id="totalComission"></p>
+        </div>
+    </div>
+
+    <div class="card text-white bg-primary  mb-3 mx-2" style="max-width: 15rem; max-height: 10rem;">
+        <div class="card-header">Seller Withdrawed</div>
+        <div class="card-body">
+            <h6 class="card-title">Balance withdrawed by shop owner</h6>
+            <p class="card-text badge badge-pill badge-danger" id="sellerWithdrawedMoney"></p>
+        </div>
+    </div>
+
+    <div class="card text-white bg-dark  mb-3 mx-2" style="max-width: 15rem; max-height: 10rem;">
+        <div class="card-header">Admin Withdrawed</div>
+        <div class="card-body">
+            <h6 class="card-title">Balance withdrawed by admin</h6>
+            <p class="card-text badge badge-pill badge-danger" id="adminWithdrawedMoney"></p>
+        </div>
+    </div>
+</div>
+
+
 
 <h5 class="mb-5">Orders in Last Week</h5>
-
-
-
-
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-<canvas id="myChart" width="200" height="50"></canvas>
-<script>
+<canvas id="orderChart" width="200" height="50"></canvas>
 
+
+<script>
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            document.getElementById('adminWithdrawedMoney').innerHTML = JSON.parse(this.responseText) + " $";
+        }
+    };
+    xmlhttp.open("GET", "Admin/GetAdminWithdrawedMoney", true);
+    xmlhttp.send();
+</script>
+
+
+
+
+
+<script>
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            document.getElementById('sellerWithdrawedMoney').innerHTML = JSON.parse(this.responseText) + " $";
+        }
+    };
+    xmlhttp.open("GET", "Admin/GetSellerWithdrawedMoney", true);
+    xmlhttp.send();
+</script>
+
+
+
+
+
+<script>
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            document.getElementById('AvailableBalanceInAllShops').innerHTML = JSON.parse(this.responseText) + " $";
+        }
+    };
+    xmlhttp.open("GET", "Admin/AvailableBalanceInAllShops", true);
+    xmlhttp.send();
+</script>
+
+
+
+
+
+<script>
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            document.getElementById('totalComission').innerHTML = JSON.parse(this.responseText) + " $";
+        }
+    };
+    xmlhttp.open("GET", "Admin/GetTotalComission", true);
+    xmlhttp.send();
+</script>
+
+
+
+
+
+<script>
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
@@ -22,16 +115,13 @@
             const today = new Date()
             const yesterday = new Date(today)
             days.push(today.toDateString());
-            for (var i = 1; i < 7;i++) {
+            for (var i = 1; i < 7; i++) {
                 yesterday.setDate(yesterday.getDate() - 1);
                 days.push(yesterday.toDateString());
             }
-            
-            
-            
 
             //chart
-            var ctx = document.getElementById('myChart').getContext('2d');
+            var ctx = document.getElementById('orderChart').getContext('2d');
             var myChart = new Chart(ctx, {
                 type: 'line',
                 data: {
@@ -74,7 +164,6 @@
     };
     xmlhttp.open("GET", "Admin/GetTodaySells", true);
     xmlhttp.send();
-
 </script>
 
 
