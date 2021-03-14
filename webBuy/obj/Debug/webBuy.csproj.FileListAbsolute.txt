@@ -205,8 +205,8 @@ C:\Users\Muntasir Alam\Desktop\Asp.net-webBuy-Project\webBuy\bin\System.Web.Webp
 C:\Users\Muntasir Alam\Desktop\Asp.net-webBuy-Project\webBuy\bin\System.Web.Helpers.xml
 C:\Users\Muntasir Alam\Desktop\Asp.net-webBuy-Project\webBuy\bin\System.Web.Mvc.xml
 C:\Users\Muntasir Alam\Desktop\Asp.net-webBuy-Project\webBuy\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\Muntasir Alam\Desktop\Asp.net-webBuy-Project\webBuy\obj\Debug\webBuy.csprojAssemblyReference.cache
 C:\Users\Muntasir Alam\Desktop\Asp.net-webBuy-Project\webBuy\obj\Debug\webBuy.csproj.CoreCompileInputs.cache
 C:\Users\Muntasir Alam\Desktop\Asp.net-webBuy-Project\webBuy\obj\Debug\webBuy.csproj.CopyComplete
 C:\Users\Muntasir Alam\Desktop\Asp.net-webBuy-Project\webBuy\obj\Debug\webBuy.dll
 C:\Users\Muntasir Alam\Desktop\Asp.net-webBuy-Project\webBuy\obj\Debug\webBuy.pdb
-C:\Users\Muntasir Alam\Desktop\Asp.net-webBuy-Project\webBuy\obj\Debug\webBuy.csprojAssemblyReference.cache

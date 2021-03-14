@@ -21,5 +21,9 @@ namespace webBuy.Repositories
             }
             return false;
         }
+        public List<User> GetBannedUsers()
+        {
+            return this.context.Users.Where(e => e.userStatus == 0).ToList();
+        }
     }
 }

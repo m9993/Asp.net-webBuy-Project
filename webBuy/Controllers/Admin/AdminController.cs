@@ -176,5 +176,39 @@ namespace webBuy.Controllers.Admin
             return Json(balanceInFraction, JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult GetBannedUsersNotification()
+        {
+            var bannedUsers = userRepository.GetBannedUsers().ToList().Count();
+            return Json(bannedUsers, JsonRequestBehavior.AllowGet);
+        }
+       
+        public ActionResult GetBannedUsers()
+        {
+            var bannedUsers = userRepository.GetBannedUsers().ToList();
+            return View("Users",bannedUsers);
+        }
+        
+        public ActionResult GetAllUsers()
+        {
+            var AllUsers = userRepository.GetAll().ToList();
+            return View("Users", AllUsers);
+        }
+
+        public ActionResult BanUser(int id)
+        {
+            var user = userRepository.Get(id);
+            user.userStatus = 0;
+            userRepository.Update(user);
+            return RedirectToAction("GetBannedUsers");
+        }
+
+        public ActionResult UnbanUser(int id)
+        {
+            var user = userRepository.Get(id);
+            user.userStatus = 1;
+            userRepository.Update(user);
+            return RedirectToAction("GetBannedUsers");
+        }
     }
+
 }

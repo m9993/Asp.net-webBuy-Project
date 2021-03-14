@@ -198,6 +198,7 @@
     <Content Include="Views\Shared\_sellerLayout.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Admin\UpdateUserProfile.cshtml" />
+    <Content Include="Views\Admin\Users.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
