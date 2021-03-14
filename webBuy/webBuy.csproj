@@ -107,6 +107,10 @@
       <DependentUpon>webBuy.edmx</DependentUpon>
       <LastGenOutput>webBuy.cs</LastGenOutput>
     </Content>
+    <Content Include="src\products\a.jpg" />
+    <Content Include="src\products\b.jpg" />
+    <Content Include="src\products\c.jpg" />
+    <Content Include="src\products\d.jpg" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -156,6 +160,7 @@
     </Compile>
     <Compile Include="Models\Validation\User2.cs" />
     <Compile Include="Models\Validation\UserMetaData.cs" />
+    <Compile Include="Models\ViewModel\ReviewProductShopView.cs" />
     <Compile Include="Models\webBuy.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -179,7 +184,10 @@
     <Compile Include="Repositories\IRepository.cs" />
     <Compile Include="Repositories\OrderRepository.cs" />
     <Compile Include="Repositories\Repository.cs" />
+    <Compile Include="Repositories\ProductRepository.cs" />
+    <Compile Include="Repositories\CategoryRepository.cs" />
     <Compile Include="Repositories\ShopRepository.cs" />
+    <Compile Include="Repositories\ReviewRepository .cs" />
     <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="Repositories\WithdrawRepository.cs" />
   </ItemGroup>
@@ -199,6 +207,8 @@
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Admin\UpdateUserProfile.cshtml" />
     <Content Include="Views\Admin\Users.cshtml" />
+    <Content Include="Views\Admin\ProductReviews.cshtml" />
+    <Content Include="Views\Admin\ProductDetailsWithRatingShopName.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -208,7 +218,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="src\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

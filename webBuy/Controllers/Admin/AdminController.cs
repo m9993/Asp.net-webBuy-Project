@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using webBuy.Models;
+using webBuy.Models.ViewModel;
 using webBuy.Repositories;
 
 namespace webBuy.Controllers.Admin
@@ -15,6 +16,9 @@ namespace webBuy.Controllers.Admin
         ShopRepository shopRepository = new ShopRepository();
         ComissionRepository comissionRepository = new ComissionRepository();
         WithdrawRepository withdrawRepository = new WithdrawRepository();
+        ReviewRepository reviewRepository = new ReviewRepository();
+        ProductRepository productRepository = new ProductRepository();
+        CategoryRepository categoryRepository = new CategoryRepository();
 
         // GET: Admin
         public ActionResult Index()
@@ -208,6 +212,82 @@ namespace webBuy.Controllers.Admin
             user.userStatus = 1;
             userRepository.Update(user);
             return RedirectToAction("GetBannedUsers");
+        }
+
+        public ActionResult GetAllProductReviews()
+        {
+            List<ReviewProductShopView> listReviewProductShopView = new List<ReviewProductShopView>();
+            
+            var allReviews = reviewRepository.GetAll().ToList();
+            foreach (var item in allReviews)
+            {
+                ReviewProductShopView reviewProductShopView = new ReviewProductShopView();
+                reviewProductShopView.ProductId= item.productId;
+                reviewProductShopView.UserId = item.userId;
+                reviewProductShopView.Review = item.review1;
+                reviewProductShopView.Rating = (int)item.rating;
+
+                var productDetails=productRepository.Get(item.productId);
+                reviewProductShopView.ProductName = productDetails.name;
+
+                var shopDetails=shopRepository.Get(productDetails.shopId);
+                reviewProductShopView.ShopName = shopDetails.name;
+                
+                listReviewProductShopView.Add(reviewProductShopView);
+            }
+
+            return View("ProductReviews",listReviewProductShopView);
+        }
+
+        public ActionResult GetProductDetailsWithRatingShopName(int id)
+        {
+            var productDetails = productRepository.Get(id);
+            ReviewProductShopView reviewProductShopView = new ReviewProductShopView();
+            reviewProductShopView.ProductId = id;
+            reviewProductShopView.ProductName = productDetails.name;
+            reviewProductShopView.UnitPrice = (double)productDetails.unitPrice;
+            reviewProductShopView.Quantity = (int )productDetails.quantity;
+            reviewProductShopView.ProductStatus = (int)productDetails.productStatus;
+            reviewProductShopView.ProductImage = productDetails.image;
+            reviewProductShopView.ProductAddedDate = productDetails.date;
+
+            var categoryDetails = categoryRepository.Get((int)productDetails.categoryId);
+            reviewProductShopView.CategoryName = categoryDetails.name;
+
+            var shopDetails = shopRepository.Get((int)productDetails.shopId);
+            reviewProductShopView.ShopName = shopDetails.name;
+
+            return View("ProductDetailsWithRatingShopName",reviewProductShopView);
+        }
+
+        public ActionResult GetProductRating(int productId)
+        {
+            int[] rating = { 0, 0, 0, 0, 0 };
+            var reviewDetails = reviewRepository.GetProductReviews(productId).ToList();
+            foreach (var item in reviewDetails)
+            {
+                if (item.rating == 1)
+                {
+                    rating[0]++;
+                }
+                if (item.rating == 2)
+                {
+                    rating[1]++;
+                }
+                if (item.rating == 3)
+                {
+                    rating[2]++;
+                }
+                if (item.rating == 4)
+                {
+                    rating[3]++;
+                }
+                if (item.rating == 5)
+                {
+                    rating[4]++;
+                }
+            }
+            return Json(rating.ToArray(), JsonRequestBehavior.AllowGet);
         }
     }
 

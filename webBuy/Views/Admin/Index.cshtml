@@ -24,7 +24,7 @@
     <div class="card text-white bg-primary  my-3 mx-2" style="max-width: 15rem; max-height: 10rem;">
         <div class="card-header">Seller Withdrawed</div>
         <div class="card-body">
-            <h6 class="card-title">Balance withdrawed by shop owner</h6>
+            <h6 class="card-title">Balance withdrawed by shop owners</h6>
             <p class="card-text badge badge-pill badge-danger" id="sellerWithdrawedMoney"></p>
         </div>
     </div>
@@ -162,7 +162,7 @@
 
         }
     };
-    xmlhttp.open("GET", "Admin/GetTodaySells", true);
+    xmlhttp.open("GET", "/Admin/GetTodaySells", true);
     xmlhttp.send();
 </script>
 

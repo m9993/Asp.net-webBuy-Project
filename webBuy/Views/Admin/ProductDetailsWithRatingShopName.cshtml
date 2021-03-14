@@ -1,0 +1,92 @@
+﻿@model webBuy.Models.ViewModel.ReviewProductShopView
+@{
+    ViewBag.Title = "ProductDetailsWithRatingShopName";
+    Layout = "~/Views/Shared/_adminLayout.cshtml";
+}
+
+<h5>Product Ratings</h5>
+<div class="d-flex justify-content-center justify-content-lg-end mb-5">
+    <div><canvas id="myChart" width="400" height="200" class=""></canvas></div>
+</div>
+
+
+<h5 class="mt-5 mb-4">Product Details</h5>
+<div class="container">
+    <div class="col-md-2 px-0 mb-3">
+        <img src="~/src/products/@Model.ProductImage" class="img-thumbnail">
+    </div>
+    <table class="mt-5">
+        <tr>
+            <th>Name:</th>
+            <td>@Model.ProductName</td>
+        </tr>
+        <tr>
+            <th>Unit Price:</th>
+            <td>@Model.UnitPrice</td>
+        </tr>
+        <tr>
+            <th>In Stock:</th>
+            <td>@Model.Quantity</td>
+        </tr>
+        <tr>
+            <th>Category:</th>
+            <td>@Model.CategoryName</td>
+        </tr>
+        <tr>
+            <th>Status:</th>
+            <td>@Model.ProductStatus</td>
+        </tr>
+        <tr>
+            <th>Shop:</th>
+            <td>@Model.ShopName</td>
+        </tr>
+        <tr>
+            <th>Last Added:</th>
+            <td>@Model.ProductAddedDate</td>
+        </tr>
+    </table>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
+
+<script>
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            var rating = JSON.parse(this.responseText);
+
+            //chart
+            var ctx = document.getElementById('myChart').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['1✮ |', '2✮ |', '3✮ |', '4✮ |', '5✮'],
+                    datasets: [{
+                        label: 'Reviews',
+                        data: rating,
+                        backgroundColor: [
+                            'rgb(255, 99, 132)',
+                            'rgb(54, 162, 235)',
+                            'rgb(255, 205, 86)',
+                            'rgb(54, 150, 155)',
+                            'rgb(200, 24, 50)'
+                        ],
+                        borderColor: [
+                            'rgb(255, 99, 132)',
+                            'rgb(54, 162, 235)',
+                            'rgb(255, 205, 86)',
+                            'rgb(54, 150, 155)',
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {}
+            });
+            //chart
+        }
+    };
+    xmlhttp.open("GET", "/Admin/GetProductRating?productId="+@Model.ProductId, true);
+    xmlhttp.send();
+</script>
