@@ -34,7 +34,12 @@
         </tr>
         <tr>
             <th>Status:</th>
-            <td>@Model.ProductStatus</td>
+            <td>
+                @if (Model.ProductStatus == 1)
+                {<text>Available</text> }
+            else
+            {<text>Not Available</text>}
+            </td>
         </tr>
         <tr>
             <th>Shop:</th>

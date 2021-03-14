@@ -239,6 +239,35 @@ namespace webBuy.Controllers.Admin
             return View("ProductReviews",listReviewProductShopView);
         }
 
+
+        public ActionResult GetAllProductReviewsOrderByDesc(string order)
+        {
+            List<ReviewProductShopView> listReviewProductShopView = new List<ReviewProductShopView>();
+
+            var allReviews = reviewRepository.GetAll().ToList();
+            if (order == "desc")
+            {
+                allReviews = reviewRepository.GetProductReviewsOrderByDesc().ToList();
+            }
+            foreach (var item in allReviews)
+            {
+                ReviewProductShopView reviewProductShopView = new ReviewProductShopView();
+                reviewProductShopView.ProductId = item.productId;
+                reviewProductShopView.UserId = item.userId;
+                reviewProductShopView.Review = item.review1;
+                reviewProductShopView.Rating = (int)item.rating;
+
+                var productDetails = productRepository.Get(item.productId);
+                reviewProductShopView.ProductName = productDetails.name;
+
+                var shopDetails = shopRepository.Get(productDetails.shopId);
+                reviewProductShopView.ShopName = shopDetails.name;
+
+                listReviewProductShopView.Add(reviewProductShopView);
+            }
+            return Json(listReviewProductShopView.ToArray(), JsonRequestBehavior.AllowGet);
+        }
+
         public ActionResult GetProductDetailsWithRatingShopName(int id)
         {
             var productDetails = productRepository.Get(id);

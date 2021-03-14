@@ -60,7 +60,7 @@
                 <a class="nav-link p-1" href="/Admin/GetAllUsers"><i class="fas fa-users"></i> All Users</a>
             </li>
             <li class="nav-item small">
-                <a class="nav-link p-1" href="/Admin/GetAllProductReviews"><i class="fas fa-file-alt"></i> Product Reviews</a>
+                <a class="nav-link p-1 ml-1" href="/Admin/GetAllProductReviews"><i class="fas fa-file-alt"></i> Product Reviews</a>
             </li>
         </ul>
     </div>
@@ -151,7 +151,9 @@
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
-                document.getElementById('bannedUsersNotification').innerHTML = JSON.parse(this.responseText);
+                if (JSON.parse(this.responseText)!=0) {
+                    document.getElementById('bannedUsersNotification').innerHTML = JSON.parse(this.responseText);
+                }
             }
         };
         xmlhttp.open("GET", "/Admin/GetBannedUsersNotification", true);

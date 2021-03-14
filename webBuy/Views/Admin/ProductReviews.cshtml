@@ -3,9 +3,16 @@
     ViewBag.Title = "ProductReviews";
     Layout = "~/Views/Shared/_adminLayout.cshtml";
 }
-
-<h5>Product Reviews</h5>
-
+<div class="d-flex justify-content-between">
+    <h5>Product Reviews</h5>
+    <div class="form-group row col-md-4">
+        <label class="col-form-label mr-3">Rating Order: </label>
+        <select id="orderBy" class="form-control form-control-sm w-50 mt-1" name="orderBy">
+            <option value="asc">Ascending</option>
+            <option value="desc">Descending</option>
+        </select>
+    </div>
+</div>
 <table class="table table-hover">
     <thead class="">
         <tr>
@@ -18,7 +25,7 @@
             <th scope="col">Action</th>
         </tr>
     </thead>
-    <tbody>
+    <tbody id="body">
         @foreach (var item in Model)
         {
         <tr>
@@ -34,3 +41,36 @@
 
         </tbody>
 </table>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+
+    $(document).ready(function () {
+        $("#orderBy").change(function () {
+           var orderBy = this.value;
+
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    var res=JSON.parse(this.responseText);
+                    var data = '';
+                    for (item = 0; item < res.length; item++) {
+                        data+="<tr>"+
+                            "<th scope='row'>" +res[item].ProductId+"</th>"
+                            +"<td>"+res[item].ProductName+"</td>"
+                            + "<td>" + res[item].Review+"</td>"
+                            + "<td>" + res[item].Rating+"</td>"
+                            + "<td>" + res[item].UserId+"</td>"
+                            + "<td>" + res[item].ShopName+"</td>"
+                            + "<td><a href='/Admin/GetProductDetailsWithRatingShopName/" +res[item].ProductId+"'>Details</a></td>"
+                        "</tr>"
+                    }
+                    $("#body").html(data);
+                }
+            };
+            xmlhttp.open("GET", "/Admin/GetAllProductReviewsOrderByDesc?order=" + orderBy, true);
+            xmlhttp.send();
+        });
+    });
+
+</script>

@@ -12,5 +12,9 @@ namespace webBuy.Repositories
         {
             return this.context.Reviews.Where(e => e.productId == id).ToList();
         }
+        public List<Review> GetProductReviewsOrderByDesc()
+        {
+            return this.context.Reviews.OrderByDescending(o=> o.rating).ToList();
+        }
     }
 }
