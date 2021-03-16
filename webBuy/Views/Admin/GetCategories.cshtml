@@ -1,0 +1,71 @@
+﻿@model IEnumerable<webBuy.Models.Category>
+@{
+    ViewBag.Title = "Categories";
+    Layout = "~/Views/Shared/_adminLayout.cshtml";
+}
+
+<h5 class="mb-3">Categories</h5>
+
+<p>
+    <a class="text-success px-2 h3" data-toggle="modal" data-target="#CategoryAdd" href=""><i class="fas fa-plus-square"></i></a>
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Name
+        </th>
+        <th>
+            Action
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.name)
+            </td>
+            <td>
+                <a class="text-warning px-2 h5" href="/Admin/CategoryEdit/@item.categoryId"><i class="fas fa-edit"></i></a>|
+                <a class="text-danger px-2 h5" href="/Admin/CategoryDelete/@item.categoryId"><i class="fas fa-trash-alt"></i></a>
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+
+
+<!--------------------------------------------- Modals --------------------------------------------->
+<!-- PaymentMethodAdd Modal -->
+<div class="modal fade" id="CategoryAdd" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Category Add</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="/Admin/CategoryAdd">
+                    <div class="form-group">
+                        <label for="name" class="col-form-label ml-3 mt-2">Name</label>
+                        <div class="col-sm-10">
+                            <input name="name" type="" class="form-control" id="name">
+                        </div>
+                    </div>
+
+                    <br />
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- CategoryAdd Modal -->
+<!--------------------------------------------- Modals --------------------------------------------->

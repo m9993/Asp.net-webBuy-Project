@@ -374,7 +374,7 @@ namespace webBuy.Controllers.Admin
             {
                 paymentRepository.Update(payment);
                 TempData["msg-type"] = "success";
-                TempData["msg"] = "Payment Method Added";
+                TempData["msg"] = "Payment Method Updated";
                 return RedirectToAction("PaymentMethods");
             }
         }
@@ -386,6 +386,62 @@ namespace webBuy.Controllers.Admin
             paymentRepository.Delete(id);
             return RedirectToAction("PaymentMethods");
             
+        }
+
+
+        public ActionResult GetCategories()
+        {
+            return View(categoryRepository.GetAll().ToList());
+        }
+
+        [HttpPost]
+        public ActionResult CategoryAdd(Category category)
+        {
+            if (!ModelState.IsValid)
+            {
+                TempData["msg-type"] = "danger";
+                TempData["msg"] = "All fields Required";
+                return RedirectToAction("GetCategories");
+            }
+            else
+            {
+                categoryRepository.Insert(category);
+                TempData["msg-type"] = "success";
+                TempData["msg"] = "Category added";
+                return RedirectToAction("GetCategories");
+            }
+        }
+
+        public ActionResult CategoryEdit(int id)
+        {
+            return View(categoryRepository.Get(id));
+        }
+
+        [HttpPost]
+        public ActionResult CategoryEdit(Category category)
+        {
+            if (!ModelState.IsValid)
+            {
+                TempData["msg-type"] = "danger";
+                TempData["msg"] = "All fields Required";
+                return RedirectToAction("GetCategories");
+            }
+            else
+            {
+                categoryRepository.Update(category);
+                TempData["msg-type"] = "success";
+                TempData["msg"] = "Category updated";
+                return RedirectToAction("GetCategories");
+            }
+        }
+
+        public ActionResult CategoryDelete(int id)
+        {
+            TempData["msg-type"] = "warning";
+            TempData["msg"] = "'" + categoryRepository.Get(id).name + "' category deleted";
+            categoryRepository.Delete(id);
+            return RedirectToAction("GetCategories");
+
         }
     }
 
