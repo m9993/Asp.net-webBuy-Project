@@ -158,7 +158,9 @@
     <Compile Include="Models\User.cs">
       <DependentUpon>webBuy.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Validation\Payment2.cs" />
     <Compile Include="Models\Validation\User2.cs" />
+    <Compile Include="Models\Validation\PaymentMetaData.cs" />
     <Compile Include="Models\Validation\UserMetaData.cs" />
     <Compile Include="Models\ViewModel\ReviewProductShopView.cs" />
     <Compile Include="Models\webBuy.Context.cs">
@@ -180,6 +182,7 @@
       <DependentUpon>webBuy.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\PaymentRepository.cs" />
     <Compile Include="Repositories\ComissionRepository.cs" />
     <Compile Include="Repositories\IRepository.cs" />
     <Compile Include="Repositories\OrderRepository.cs" />
@@ -209,6 +212,8 @@
     <Content Include="Views\Admin\Users.cshtml" />
     <Content Include="Views\Admin\ProductReviews.cshtml" />
     <Content Include="Views\Admin\ProductDetailsWithRatingShopName.cshtml" />
+    <Content Include="Views\Admin\PaymentMethods.cshtml" />
+    <Content Include="Views\Admin\PaymentMethodEdit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

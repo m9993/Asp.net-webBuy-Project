@@ -11,6 +11,19 @@ namespace webBuy.Controllers.Admin
 {
     public class AdminController : Controller
     {
+        //Session authentication
+        protected override void OnActionExecuting(ActionExecutingContext filterContext)
+        {
+            base.OnActionExecuting(filterContext);
+            if (filterContext.HttpContext.Session["userProfile"] == null)
+            {
+                TempData["msg"] = "Session Timeout! Please Login First.";
+                filterContext.Result = new RedirectResult("/Login/Index");
+                return;
+            }
+        }
+        //
+
         UserRepository userRepository = new UserRepository();
         OrderRepository orderRepository = new OrderRepository();
         ShopRepository shopRepository = new ShopRepository();
@@ -19,6 +32,7 @@ namespace webBuy.Controllers.Admin
         ReviewRepository reviewRepository = new ReviewRepository();
         ProductRepository productRepository = new ProductRepository();
         CategoryRepository categoryRepository = new CategoryRepository();
+        PaymentRepository paymentRepository = new PaymentRepository();
 
         // GET: Admin
         public ActionResult Index()
@@ -317,6 +331,61 @@ namespace webBuy.Controllers.Admin
                 }
             }
             return Json(rating.ToArray(), JsonRequestBehavior.AllowGet);
+        }
+        
+        public ActionResult PaymentMethods()
+        {
+            return View(paymentRepository.GetAll().ToList()) ;
+        }
+
+        [HttpPost]
+        public ActionResult PaymentMethodAdd(Payment payment)
+        {
+            if (!ModelState.IsValid)
+            {
+                TempData["msg-type"] = "danger";
+                TempData["msg"] = "All fields Required";
+                return RedirectToAction("PaymentMethods");
+            }
+            else
+            {
+                paymentRepository.Insert(payment);
+                TempData["msg-type"] = "success";
+                TempData["msg"] = "Payment Method Added";
+                return RedirectToAction("PaymentMethods");
+            }
+        }
+
+        public ActionResult PaymentMethodEdit(int id)
+        {
+            return View(paymentRepository.Get(id));
+        }
+
+        [HttpPost]
+        public ActionResult PaymentMethodEdit(Payment payment)
+        {
+            if (!ModelState.IsValid)
+            {
+                TempData["msg-type"] = "danger";
+                TempData["msg"] = "All fields Required";
+                return RedirectToAction("PaymentMethods");
+            }
+            else
+            {
+                paymentRepository.Update(payment);
+                TempData["msg-type"] = "success";
+                TempData["msg"] = "Payment Method Added";
+                return RedirectToAction("PaymentMethods");
+            }
+        }
+
+        public ActionResult PaymentMethodDelete(int id)
+        {
+            TempData["msg-type"] = "warning";
+            TempData["msg"] = "'"+ paymentRepository.Get(id).paymentMethod+ "' method deleted";
+            paymentRepository.Delete(id);
+            return RedirectToAction("PaymentMethods");
+            
         }
     }
 
