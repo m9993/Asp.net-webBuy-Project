@@ -1,0 +1,29 @@
+﻿@model IEnumerable<webBuy.Models.Product>
+
+@{
+    ViewBag.Title = "ShopProducts";
+    Layout = "~/Views/Shared/_adminLayout.cshtml";
+}
+
+<h5>Shop Products</h5>
+
+<p>
+</p>
+<div class="d-flex flex-wrap justify-content-center">
+    @foreach (var item in Model)
+    {
+        <div class="card" style="width: 16rem;">
+            <img class="card-img-top" src="~/src/products/@item.image" alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">@item.name</h5>
+                <p class="card-text  my-0 py-1"><b>Price: </b> @item.unitPrice $</p>
+                <p class="card-text my-0 py-1"><b>Available:</b> @item.quantity</p>
+                <p class="card-text my-0 py-1"><b>Status: </b> @if (item.productStatus == 0)
+                {<text>Not available</text>}
+            else
+            {<text>Available</text>}</p>
+                <p class="card-text my-0 py-1"><b>Last Updated:</b> @item.date</p>
+            </div>
+        </div>
+    }
+</div>

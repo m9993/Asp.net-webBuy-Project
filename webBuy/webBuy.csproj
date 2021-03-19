@@ -160,9 +160,11 @@
     </Compile>
     <Compile Include="Models\Validation\Payment2.cs" />
     <Compile Include="Models\Validation\Category2.cs" />
+    <Compile Include="Models\Validation\Shop2.cs" />
     <Compile Include="Models\Validation\User2.cs" />
     <Compile Include="Models\Validation\PaymentMetaData.cs" />
     <Compile Include="Models\Validation\CategoryMetaData.cs" />
+    <Compile Include="Models\Validation\ShopMetaData.cs" />
     <Compile Include="Models\Validation\UserMetaData.cs" />
     <Compile Include="Models\ViewModel\ReviewProductShopView.cs" />
     <Compile Include="Models\webBuy.Context.cs">
@@ -218,6 +220,8 @@
     <Content Include="Views\Admin\PaymentMethodEdit.cshtml" />
     <Content Include="Views\Admin\GetCategories.cshtml" />
     <Content Include="Views\Admin\CategoryEdit.cshtml" />
+    <Content Include="Views\Admin\AllShops.cshtml" />
+    <Content Include="Views\Admin\ShopProducts.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

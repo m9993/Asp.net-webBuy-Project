@@ -8,5 +8,9 @@ namespace webBuy.Repositories
 {
     public class ProductRepository : Repository<Product>
     {
+        public List<Product> GetByShopId(int id)
+        {
+            return this.context.Products.Where(e => e.shopId == id).ToList();
+        }
     }
 }

@@ -443,6 +443,40 @@ namespace webBuy.Controllers.Admin
             return RedirectToAction("GetCategories");
 
         }
+    
+
+        public ActionResult AllShops()
+        {
+            return View(shopRepository.GetAll().ToList());
+        }
+
+        [HttpPost]
+        public ActionResult ShopUpdate(int id,Shop shop)
+        {
+            if (ModelState.IsValid)
+            {
+                var getShop = shopRepository.Get(id);
+                getShop.setComission = shop.setComission;
+                getShop.shopStatus = shop.shopStatus;
+                shopRepository.Update(getShop);
+                TempData["msg-type"] = "success";
+                TempData["msg"] = "Shop updated";
+            }
+            else
+            {
+                TempData["msg-type"] = "danger";
+                TempData["msg"] = "Please fill the fields correctly";
+            }
+            return RedirectToAction("AllShops");
+
+        }
+
+
+        public ActionResult ShopProducts(int id)
+        {
+            return View(productRepository.GetByShopId(id));
+        }
+        
     }
 
 }
