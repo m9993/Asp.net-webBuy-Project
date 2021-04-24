@@ -4,6 +4,14 @@ webBuy eCommerce site team project <br />
 <li>Entity Framework</li>
 <li>DB First Approach</li>
 </ul
+  
+__Snapshots__
 
-  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/1200px-Image_created_with_a_mobile_phone.png" width="350" title="hover text">
+> Front page
+![Image](./public/front-page.png)
 
+> Search result
+![Image](./public/Search-Weather.png)
+
+> empty search validation
+![Image](./public/Search-empty.png)
